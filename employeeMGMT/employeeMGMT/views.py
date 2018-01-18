@@ -26,8 +26,8 @@ def main(request):
 def mainpost(request):
 	global email
 	email = request.POST.get('email')
-	email = str(email).rstrip(' \t\r\n\0') #new line added here --------
-	password = request.POST.get('password')
+	# email = str(email).rstrip(' \t\r\n\0') #new line added here --------
+	password = request.POST.get('passw')
 	try:
 		user = authe.sign_in_with_email_and_password(email, password)
 	
@@ -38,12 +38,12 @@ def mainpost(request):
 	#user = authe.sign_in_with_email_and_password(email, password)
 	uid = user['localId']
 	request.session['fav_color'] = str(uid)
-	all_users = database.child("Daily_Report").child(uid).child("details").get()
-	d = all_users.val()
-	print ("date here is:"+str(d))
-	d = " "+str(d['name'])
-	global name
-	name = "<b>"+str("Hello,"+str(d))+"</b>"
+	# all_users = database.child("Daily_Report").child(uid).child("details").get()
+	# d = all_users.val()
+	# print ("date here is:"+str(d))
+	# d = " "+str(d['name'])
+	# global name
+	# name = "<b>"+str("Hello,"+str(d))+"</b>"
 	
 	if email == "vishal.sharma438@gmail.com":
 
@@ -104,22 +104,24 @@ def signuppost(request):
 		"profID": profID,
 		"contactNum": cntact
 		}
+	
 	database.child("user").child("doctor").child(uid).child("details").set(data)
+	return render(request, 'form.html')
 	#============testing code starts here==================#
-	user = authe.sign_in_with_email_and_password(email, passw)
-	uid = user['localId']
-	request.session['fav_color'] = str(uid)
-	#all_users = database.child("Daily_Report").child(uid).child("details").get()
-	#d = all_users.val()
-	#print ("date here is:"+str(d))
-	#d = " "+str(d['name'])
-	global name
-	name = "<b>"+str("Hello,"+str(fullName))+"</b>"
-	message  = "Account Created Successfully"
-	return render(request,'home.html', {'name':name,'message':message})
+	# user = authe.sign_in_with_email_and_password(email, passw)
+	# uid = user['localId']
+	# request.session['fav_color'] = str(uid)
+	# #all_users = database.child("Daily_Report").child(uid).child("details").get()
+	# #d = all_users.val()
+	# #print ("date here is:"+str(d))
+	# #d = " "+str(d['name'])
+	# global name
+	# name = "<b>"+str("Hello,"+str(fullName))+"</b>"
+	# message  = "Account Created Successfully"
+	# return render(request,'home.html', {'name':name,'message':message})
 
-	#========== ends here
-	#return render(request,'form.html')
+	# #========== ends here
+	# #return render(request,'form.html')
 
 
 def adminhome(request):
